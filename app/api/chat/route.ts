@@ -211,7 +211,7 @@ export async function POST(req: NextRequest) {
           system_instruction: { parts: [{ text: systemPrompt }] },
           contents: chatHistory,
           generationConfig: {
-            maxOutputTokens: 200,
+            maxOutputTokens: 1024,
             temperature: 0.8,
           },
         }),

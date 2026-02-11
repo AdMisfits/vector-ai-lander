@@ -184,6 +184,21 @@ export async function POST(req: NextRequest) {
       messages.push({ role: "user", content: message });
     }
 
+    // Cap conversation at 40 exchanges (~20 back-and-forth) to limit spend
+    // Haiku: ~$1/MTok input, ~$5/MTok output
+    // System prompt ~4K tokens + 40 messages ~6K tokens = ~10K input per call
+    // 20 calls * 10K avg input = 200K input tokens = $0.20
+    // 20 calls * 150 output tokens = 3K output tokens = $0.015
+    // Total per conversation: well under $2
+    const MAX_MESSAGES = 40;
+    if (messages.length > MAX_MESSAGES) {
+      return NextResponse.json({
+        response:
+          "We've been chatting for a while! You should definitely book a strategy call so a consultant can walk you through everything in detail: " +
+          (process.env.BOOKING_URL ?? "https://calendly.com/vector"),
+      });
+    }
+
     const bookingUrl = process.env.BOOKING_URL ?? "https://calendly.com/vector";
     const systemPrompt = SYSTEM_PROMPT.replace("{{BOOKING_URL}}", bookingUrl);
 
@@ -195,8 +210,8 @@ export async function POST(req: NextRequest) {
         "anthropic-version": "2023-06-01",
       },
       body: JSON.stringify({
-        model: "claude-sonnet-4-5-20250929",
-        max_tokens: 300,
+        model: "claude-haiku-4-5-20251001",
+        max_tokens: 200,
         system: systemPrompt,
         messages,
       }),

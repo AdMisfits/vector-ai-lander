@@ -7,8 +7,8 @@
 }
 
 body {
-  background: #07070a;
-  color: #fff;
+  background: #ffffff;
+  color: #111;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -21,17 +21,11 @@ body {
   background: transparent;
 }
 .chat-scroll::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.08);
   border-radius: 4px;
 }
 .chat-scroll::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-/* Glow effect on chat container */
-.chat-glow {
-  box-shadow: 0 0 80px -20px rgba(59, 130, 246, 0.08),
-              0 0 40px -10px rgba(59, 130, 246, 0.04);
+  background: rgba(0, 0, 0, 0.15);
 }
 
 /* Typing indicator dots */

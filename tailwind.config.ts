@@ -5,9 +5,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        surface: "#07070a",
-        "surface-light": "#0d0d12",
-        accent: "#3b82f6",
+        accent: "#2563eb",
       },
       animation: {
         "fade-in": "fadeIn 0.4s ease-out",

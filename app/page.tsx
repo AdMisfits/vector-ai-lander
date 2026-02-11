@@ -129,7 +129,7 @@ export default function Page() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f9f9f9] flex flex-col">
+    <main className="min-h-screen bg-white flex flex-col">
       {/* ── Navbar ── */}
       <nav className="shrink-0 px-6 py-4 flex items-center justify-between">
         <img
@@ -224,7 +224,7 @@ export default function Page() {
 
         {/* Input container */}
         <form onSubmit={handleSubmit}>
-          <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-4 transition-all">
+          <div className="bg-white rounded-3xl border border-[#9B9B9B] shadow-sm p-4 transition-all">
             <div className="flex items-center gap-3">
               <textarea
                 ref={inputRef}

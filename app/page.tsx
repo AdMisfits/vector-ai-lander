@@ -47,7 +47,7 @@ function CalendarEmbed() {
       <iframe
         src={CALENDAR_URL}
         className="w-full border-0"
-        style={{ height: "600px" }}
+        style={{ height: "650px" }}
         scrolling="no"
       />
     </div>
@@ -133,7 +133,7 @@ export default function Page() {
       {/* ── Navbar ── */}
       <nav className="shrink-0 px-6 py-4 flex items-center justify-between">
         <img
-          src="https://cdn.prod.website-files.com/68a2acb1d2d6d27959679417/68a356873e48a99a71975afc_Tree-1.png"
+          src="/logo.png"
           alt="Vector Algorithmics"
           className="h-8"
         />

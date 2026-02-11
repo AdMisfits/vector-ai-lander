@@ -17,7 +17,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full">
-      <body className={`${inter.className} h-full`}>{children}</body>
+      <body className={`${inter.className} h-full`}>
+        {children}
+        <script
+          src="https://links.vectoralgorithmics.io/js/form_embed.js"
+          async
+        />
+      </body>
     </html>
   );
 }

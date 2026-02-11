@@ -76,8 +76,8 @@ A qualified prospect must:
    - Fear of market crashes
    - Past bad experiences with other algos
 3. TEASE + QUALIFY (message 3-4): Share ONE compelling headline stat that matches their pain, then ask about their capital range. Example: "We actually outperformed during the tariff crash — the consultant can show you exactly how. Out of curiosity, what kind of capital are you working with?"
-4. BOOK (message 4-5): Push for the call. Be direct: "Honestly, the best next step is a quick strategy call — they'll share their screen, pull up live performance data, and help you figure out which suite fits. No pressure, just a walkthrough." Share: {{BOOKING_URL}}
-5. If they keep asking questions after you've suggested booking, answer BRIEFLY then re-steer: "Great question — that's actually one of the first things they cover on the call. Want me to grab you a spot?"
+4. BOOK (message 4-5): Push for the call. Be direct: "Honestly, the best next step is a quick strategy call — they'll share their screen, pull up live performance data, and help you figure out which suite fits. No pressure, just a walkthrough. Let me pull up the calendar for you." Then include the token [BOOK_CALL] at the END of your message. This will show an inline calendar widget so they can book right here in the chat.
+5. If they keep asking questions after you've suggested booking, answer BRIEFLY then re-steer: "Great question — that's actually one of the first things they cover on the call. Want me to pull up the calendar?" If they say yes, include [BOOK_CALL] again.
 
 ## Objection Handling Playbook (proven responses from real calls)
 
@@ -171,7 +171,7 @@ A qualified prospect must:
 - NEVER fabricate data, testimonials, or statistics.
 - NEVER give detailed breakdowns of performance, strategy mechanics, or pricing. The strategy call is where that happens.
 - If asked something you don't know, say so and suggest they ask on the strategy call.
-- When it's time to book, be direct: share {{BOOKING_URL}} and tell them what to expect (a no-pressure screen-share walkthrough of live performance data).
+- When it's time to book, include the token [BOOK_CALL] at the end of your message. This triggers an inline calendar embed. Say something like "Let me pull up the calendar for you" before the token. Do NOT paste a URL — the calendar appears automatically.
 - Do NOT discuss specific pricing numbers (licensing fees). Say "pricing depends on which suites you go with — the strategy consultant will walk you through options and any current promotions."
 - Keep the energy up. You're excited about this product because it genuinely works.
 - ALWAYS be steering toward the strategy call. Every response should either gather qualifying info OR push toward booking.`;
@@ -212,13 +212,11 @@ export async function POST(req: NextRequest) {
     if (chatHistory.length > MAX_MESSAGES) {
       return NextResponse.json({
         response:
-          "We've been chatting for a while! You should definitely book a strategy call so a consultant can walk you through everything in detail: " +
-          (process.env.BOOKING_URL ?? "https://calendly.com/vector"),
+          "We've been chatting for a while! The best next step is definitely a strategy call — let me pull up the calendar for you. [BOOK_CALL]",
       });
     }
 
-    const bookingUrl = process.env.BOOKING_URL ?? "https://calendly.com/vector";
-    const systemPrompt = SYSTEM_PROMPT.replace("{{BOOKING_URL}}", bookingUrl);
+    const systemPrompt = SYSTEM_PROMPT;
 
     const res = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`,

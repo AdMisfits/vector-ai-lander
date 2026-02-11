@@ -5,6 +5,7 @@ import { useState, useEffect, useRef, FormEvent } from "react";
 interface Message {
   role: "assistant" | "user";
   content: string;
+  showCalendar?: boolean;
 }
 
 const SAMPLE_PROMPTS = [
@@ -14,9 +15,13 @@ const SAMPLE_PROMPTS = [
   "Is my money safe?",
 ];
 
+const CALENDAR_URL = process.env.NEXT_PUBLIC_GHL_CALENDAR_URL ?? "";
+
 function renderMarkdown(text: string) {
+  // Strip out the [BOOK_CALL] token before rendering
+  const clean = text.replace(/\[BOOK_CALL\]/g, "").trim();
   const parts: (string | JSX.Element)[] = [];
-  const lines = text.split("\n");
+  const lines = clean.split("\n");
   lines.forEach((line, li) => {
     const segments = line.split(/(\*\*[^*]+\*\*)/g);
     segments.forEach((seg, si) => {
@@ -33,6 +38,20 @@ function renderMarkdown(text: string) {
     if (li < lines.length - 1) parts.push(<br key={`br-${li}`} />);
   });
   return parts;
+}
+
+function CalendarEmbed() {
+  if (!CALENDAR_URL) return null;
+  return (
+    <div className="mt-3 rounded-2xl overflow-hidden border border-gray-200 bg-white">
+      <iframe
+        src={CALENDAR_URL}
+        className="w-full border-0"
+        style={{ height: "600px" }}
+        scrolling="no"
+      />
+    </div>
+  );
 }
 
 export default function Page() {
@@ -78,9 +97,17 @@ export default function Page() {
         }),
       });
       const data = await res.json();
+
+      // Detect if AI wants to show the calendar
+      const hasBooking = data.response.includes("[BOOK_CALL]");
+
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: data.response },
+        {
+          role: "assistant",
+          content: data.response,
+          showCalendar: hasBooking,
+        },
       ]);
     } catch {
       setMessages((prev) => [
@@ -156,29 +183,30 @@ export default function Page() {
 
       {/* ── Chat ── */}
       <section id="chat" className="px-4 pb-10 max-w-2xl w-full mx-auto">
-        {/* Messages area — only shows when conversation started */}
+        {/* Messages area */}
         {started && (
-          <div
-            className="mb-4 max-h-[50vh] overflow-y-auto chat-scroll space-y-4 px-1 transition-all"
-          >
+          <div className="mb-4 max-h-[60vh] overflow-y-auto chat-scroll space-y-4 px-1 transition-all">
             {messages.map((msg, i) => (
-              <div
-                key={i}
-                className={`flex animate-slide-up ${
-                  msg.role === "user" ? "justify-end" : "justify-start"
-                }`}
-              >
+              <div key={i}>
                 <div
-                  className={`max-w-[80%] px-4 py-3 text-[14px] leading-relaxed ${
-                    msg.role === "user"
-                      ? "bg-gray-900 text-white rounded-3xl rounded-br-lg"
-                      : "bg-white text-gray-800 rounded-3xl rounded-bl-lg shadow-sm border border-gray-200/60"
+                  className={`flex animate-slide-up ${
+                    msg.role === "user" ? "justify-end" : "justify-start"
                   }`}
                 >
-                  {msg.role === "assistant"
-                    ? renderMarkdown(msg.content)
-                    : msg.content}
+                  <div
+                    className={`max-w-[80%] px-4 py-3 text-[14px] leading-relaxed ${
+                      msg.role === "user"
+                        ? "bg-gray-900 text-white rounded-3xl rounded-br-lg"
+                        : "bg-white text-gray-800 rounded-3xl rounded-bl-lg shadow-sm border border-gray-200/60"
+                    }`}
+                  >
+                    {msg.role === "assistant"
+                      ? renderMarkdown(msg.content)
+                      : msg.content}
+                  </div>
                 </div>
+                {/* Calendar embed appears right after the booking message */}
+                {msg.showCalendar && <CalendarEmbed />}
               </div>
             ))}
             {isTyping && (
@@ -194,10 +222,9 @@ export default function Page() {
           </div>
         )}
 
-        {/* Input container — ChatGPT style unified card */}
+        {/* Input container */}
         <form onSubmit={handleSubmit}>
           <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-4 transition-all">
-            {/* Input row */}
             <div className="flex items-center gap-3">
               <textarea
                 ref={inputRef}
@@ -234,7 +261,6 @@ export default function Page() {
               </button>
             </div>
 
-            {/* Prompt pills — only before conversation starts */}
             {!started && (
               <div className="flex items-center gap-2 mt-3 flex-wrap">
                 {SAMPLE_PROMPTS.map((prompt) => (

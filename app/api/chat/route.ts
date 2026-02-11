@@ -159,7 +159,7 @@ A qualified prospect must:
 - Keep the energy up. You're excited about this product because it genuinely works.`;
 
 export async function POST(req: NextRequest) {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey) {
     return NextResponse.json(
@@ -172,26 +172,26 @@ export async function POST(req: NextRequest) {
     const { message, history } = await req.json();
 
     // Build messages array from conversation history
-    const messages = (history ?? []).map(
+    const chatHistory = (history ?? []).map(
       (msg: { role: string; content: string }) => ({
-        role: msg.role,
-        content: msg.content,
+        role: msg.role === "assistant" ? "model" : "user",
+        parts: [{ text: msg.content }],
       })
     );
 
     // If history is empty, just use the current message
-    if (messages.length === 0 && message) {
-      messages.push({ role: "user", content: message });
+    if (chatHistory.length === 0 && message) {
+      chatHistory.push({ role: "user", parts: [{ text: message }] });
     }
 
     // Cap conversation at 40 exchanges (~20 back-and-forth) to limit spend
-    // Haiku: ~$1/MTok input, ~$5/MTok output
-    // System prompt ~4K tokens + 40 messages ~6K tokens = ~10K input per call
-    // 20 calls * 10K avg input = 200K input tokens = $0.20
-    // 20 calls * 150 output tokens = 3K output tokens = $0.015
-    // Total per conversation: well under $2
+    // Gemini 3 Flash: $0.50/MTok input, $3/MTok output
+    // System prompt ~4K tokens + 40 messages ~6K = ~10K input per call
+    // 20 calls * 10K avg = 200K input = $0.10
+    // 20 calls * 150 output = 3K output = $0.009
+    // Total per conversation: ~$0.11 — well under $2
     const MAX_MESSAGES = 40;
-    if (messages.length > MAX_MESSAGES) {
+    if (chatHistory.length > MAX_MESSAGES) {
       return NextResponse.json({
         response:
           "We've been chatting for a while! You should definitely book a strategy call so a consultant can walk you through everything in detail: " +
@@ -202,30 +202,32 @@ export async function POST(req: NextRequest) {
     const bookingUrl = process.env.BOOKING_URL ?? "https://calendly.com/vector";
     const systemPrompt = SYSTEM_PROMPT.replace("{{BOOKING_URL}}", bookingUrl);
 
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model: "claude-haiku-4-5-20251001",
-        max_tokens: 200,
-        system: systemPrompt,
-        messages,
-      }),
-    });
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: systemPrompt }] },
+          contents: chatHistory,
+          generationConfig: {
+            maxOutputTokens: 200,
+            temperature: 0.8,
+          },
+        }),
+      }
+    );
 
     if (!res.ok) {
       const err = await res.text();
-      console.error("Anthropic API error:", res.status, err);
+      console.error("Gemini API error:", res.status, err);
       throw new Error(`API returned ${res.status}`);
     }
 
     const data = await res.json();
     const response =
-      data.content?.[0]?.text ?? "Let me think about that for a moment...";
+      data.candidates?.[0]?.content?.parts?.[0]?.text ??
+      "Let me think about that for a moment...";
 
     return NextResponse.json({ response });
   } catch (err) {

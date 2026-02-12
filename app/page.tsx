@@ -139,7 +139,7 @@ export default function Page() {
         />
         <a
           href={process.env.NEXT_PUBLIC_BOOKING_URL ?? "#chat"}
-          className="text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors"
+          className="text-sm font-medium text-accent hover:text-blue-800 transition-colors"
         >
           Book a Strategy Call &rarr;
         </a>
@@ -172,11 +172,11 @@ export default function Page() {
             <span className="text-gray-200 hidden sm:inline">|</span>
             <span>12-mo guarantee</span>
           </div>
-          <div className="mt-2.5 flex items-center justify-center gap-8 text-[11px] text-gray-300 font-semibold uppercase tracking-[0.15em]">
-            <span>Forbes</span>
-            <span>USA Today</span>
-            <span>TechBullion</span>
-            <span>GBAF</span>
+          <div className="mt-4 flex items-center justify-center gap-8 sm:gap-10 opacity-40 grayscale flex-wrap">
+            <img src="https://cdn.prod.website-files.com/67af85ea353c5f066fec698e/693b7c0d2a1c5eff7c7b71ca_0x0.png" alt="Forbes" className="h-5 object-contain" />
+            <img src="https://cdn.prod.website-files.com/67af85ea353c5f066fec698e/68f3d0e4ae8839f1692b8024_USA-Today-logo.png" alt="USA Today" className="h-5 object-contain" />
+            <img src="https://cdn.prod.website-files.com/67af85ea353c5f066fec698e/693b7b665a5fafdebd03ea6a_TechBullion-Transparent-Logo.webp" alt="TechBullion" className="h-5 object-contain" />
+            <img src="https://cdn.prod.website-files.com/67af85ea353c5f066fec698e/6953f13117484ba92320d177_gbaf-logo.avif" alt="GBAF" className="h-5 object-contain" />
           </div>
         </div>
       </section>
@@ -243,7 +243,7 @@ export default function Page() {
               <button
                 type="submit"
                 disabled={!input.trim() || isTyping}
-                className="shrink-0 w-9 h-9 flex items-center justify-center bg-gray-900 hover:bg-black text-white disabled:opacity-20 rounded-full transition-all"
+                className="shrink-0 w-9 h-9 flex items-center justify-center bg-accent hover:bg-blue-700 text-white disabled:opacity-20 rounded-full transition-all"
               >
                 <svg
                   className="w-4 h-4"

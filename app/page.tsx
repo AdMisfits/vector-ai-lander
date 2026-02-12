@@ -224,7 +224,7 @@ export default function Page() {
 
         {/* Input container */}
         <form onSubmit={handleSubmit}>
-          <div className="bg-white rounded-3xl border border-[#9B9B9B] shadow-sm p-4 transition-all">
+          <div className="bg-white rounded-3xl border border-[#ECECEC] shadow-sm p-4 transition-all">
             <div className="flex items-center gap-3">
               <textarea
                 ref={inputRef}

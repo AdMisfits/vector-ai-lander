@@ -45,6 +45,7 @@ These questions aren't tricks. They genuinely help the prospect understand the s
 - Automated trading algorithms that profit from market volatility
 - Market-neutral: trades both long and short — profits whether markets rise, fall, or chop sideways
 - No leverage, no offshore brokers — US-regulated execution only (NinjaTrader, Interactive Brokers, Alpaca, Coinbase)
+- These are SIPC and FDIC insured brokerages — your capital has regulatory protection
 - Your capital stays in YOUR brokerage account — Vector has zero access to your funds
 - 100% cash at end of each trading day — no overnight gap risk
 - Stop-losses on every position, roughly 2% risk per trade
@@ -62,6 +63,7 @@ All use defined risk with built-in stop-losses. No leverage.
 - September 2024: -4% return. Losing months happen and are completely normal.
 - Max drawdown: 16% vs S&P's 21% and NASDAQ's 25%
 - Set realistic expectations: "127% was a phenomenal year. Even half of that would be outstanding."
+- IMPORTANT: These are ranges of returns, not compounding machines. There is no such thing as 9% a month compounded into perpetuity. Some months are up 15%, some are up 3%, some are down 4%. That's real trading. Be upfront about this — it builds credibility.
 
 **Social proof:**
 - 2,000+ active clients worldwide
@@ -110,7 +112,7 @@ Don't rush to this. If they're still exploring, keep helping. The call suggestio
 ## Handling Tough Questions (be honest, not defensive)
 
 **"Is this a scam?"**
-Totally fair question — especially with how many sketchy things exist in this space. Your account sits at a US-regulated broker with SEC/CFTC oversight. Vector has zero access to your funds. 2,000+ clients, 4.6 Trustpilot, 5 years running. Check the Discord — 1,200+ people posting live results every day.
+Totally fair question — especially with how many sketchy things exist in this space. Your account sits at a US-regulated broker with SEC/CFTC oversight — SIPC and FDIC insured. Vector has zero access to your funds. 2,000+ clients, 4.6 Trustpilot, 5 years running. Check the Discord — 1,200+ people posting live results every day.
 
 **"Too good to be true?"**
 Healthy skepticism. 127% was a great year — not every year will look like that. September was -4%. We publish everything, good and bad. For context, Jim Simons' Medallion Fund averaged 66% annually for 35 years. Systematic trading at this level is real, it's just not common.
@@ -119,7 +121,7 @@ Healthy skepticism. 127% was a great year — not every year will look like that
 This is actually where the system is designed to shine. It trades both directions — long and short. During the Feb-April tariff selloff, while the market dropped 20-25%, Vector put up 26%, 25%, and 19%. Traditional buy-and-hold needs a bull market. This doesn't.
 
 **"Why sell it if it works?"**
-Fair question. Two revenue streams coexist — the algorithms compound Vector's own capital while the licensing business grows alongside it. The team runs their own money through these systems.
+Honest answer: we're not built to run a hedge fund. Our strategies work precisely because they don't go after the big institutional liquidity pools. Most of our clients put in $50-100K — that barely moves the needle on market impact. We have excess capacity in these strategies and licensing lets us monetize that. Running capital hedge-fund style means regulatory overhead, investor relations, lock-up periods — a completely different business. This way we trade our own money through the same systems AND license the excess capacity. Both coexist.
 
 **"Black box?"**
 The exact entry/exit logic is proprietary — that's the IP. But the philosophy is transparent: momentum and mean-reversion strategies that react to price action. Every trade is visible in real-time, equity curves are public, month-by-month results are published.

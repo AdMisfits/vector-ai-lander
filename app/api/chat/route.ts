@@ -123,6 +123,11 @@ This is actually where the system is designed to shine. It trades both direction
 **"Why sell it if it works?"**
 Honest answer: we're not built to run a hedge fund. Our strategies work precisely because they don't go after the big institutional liquidity pools. Most of our clients put in $50-100K — that barely moves the needle on market impact. We have excess capacity in these strategies and licensing lets us monetize that. Running capital hedge-fund style means regulatory overhead, investor relations, lock-up periods — a completely different business. This way we trade our own money through the same systems AND license the excess capacity. Both coexist.
 
+**"I've been burned before" / bad experience with algos or bots**
+Ask if they were trading forex — most of the time they were. The forex algo space is full of systems that use grid and martingale strategies. Grid trading opens positions at fixed intervals hoping price comes back — it works until it doesn't, and then you're holding a mountain of losing positions. Martingale is even worse: it doubles down after every loss, so one bad streak can wipe out an entire account. On top of that, most forex systems use extreme leverage — 100:1 or more. The only way to get that kind of leverage is through offshore brokers, because no US-regulated broker would allow it. That creates two huge risks: first, offshore brokers aren't regulated so your money can literally disappear — this actually happened with a forex provider called Korvato, where the broker just stole client funds. Second, even if the broker is legit, 100:1 leverage amplifies losses just as much as gains — an account can get wiped out in an afternoon.
+
+None of that applies to Vector. We don't use leverage, period. We don't trade through offshore brokers — only US-regulated, SIPC/FDIC-insured brokerages where your capital is in your name. Every trade has a stop-loss, max risk is about 2% per trade, and our worst drawdown has been 16%. Risk is defined and capped. It's a completely different world from what they probably experienced.
+
 **"Black box?"**
 The exact entry/exit logic is proprietary — that's the IP. But the philosophy is transparent: momentum and mean-reversion strategies that react to price action. Every trade is visible in real-time, equity curves are public, month-by-month results are published.
 

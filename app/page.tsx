@@ -141,7 +141,7 @@ export default function Page() {
           href={process.env.NEXT_PUBLIC_BOOKING_URL ?? "#chat"}
           className="text-sm font-medium text-accent hover:text-blue-800 transition-colors"
         >
-          Book a Strategy Call &rarr;
+          Book a Demo Call &rarr;
         </a>
       </nav>
 

@@ -129,7 +129,7 @@ export default function Page() {
   }
 
   return (
-    <main className="min-h-screen bg-white flex flex-col">
+    <main className="h-[100dvh] bg-white flex flex-col overflow-hidden sm:overflow-auto sm:h-auto sm:min-h-screen">
       {/* ── Navbar ── */}
       <nav className="shrink-0 px-6 py-4 flex items-center justify-between">
         <img
@@ -145,23 +145,23 @@ export default function Page() {
         </a>
       </nav>
 
-      {/* ── Hero ── */}
-      <section className="px-6 pt-10 pb-3 text-center max-w-3xl mx-auto">
-        <h1 className="text-3xl sm:text-4xl md:text-[44px] font-bold tracking-tight leading-[1.15] text-gray-900">
+      {/* ── Hero (hidden on mobile once chat starts) ── */}
+      <section className={`px-6 pt-6 sm:pt-10 pb-3 text-center max-w-3xl mx-auto ${started ? "hidden sm:block" : ""}`}>
+        <h1 className="text-[26px] sm:text-4xl md:text-[44px] font-bold tracking-tight leading-[1.15] text-gray-900">
           Your portfolio shouldn&apos;t need a{" "}
           <br className="hidden sm:block" />
           bull market to grow.
         </h1>
-        <p className="mt-4 text-gray-500 text-[17px] leading-relaxed max-w-xl mx-auto">
+        <p className="mt-3 sm:mt-4 text-gray-500 text-[15px] sm:text-[17px] leading-relaxed max-w-xl mx-auto">
           Vector&apos;s algorithms trade both directions. When markets dropped
           25% during the tariff crisis, our clients were up 70%.
         </p>
       </section>
 
-      {/* ── Social Proof ── */}
-      <section className="px-6 pt-2 pb-6">
+      {/* ── Social Proof (hidden on mobile once chat starts) ── */}
+      <section className={`px-6 pt-2 pb-4 sm:pb-6 ${started ? "hidden sm:block" : ""}`}>
         <div className="max-w-2xl mx-auto">
-          <div className="flex items-center justify-center gap-5 sm:gap-6 text-[13px] text-gray-400 font-medium flex-wrap">
+          <div className="flex items-center justify-center gap-4 sm:gap-6 text-[12px] sm:text-[13px] text-gray-400 font-medium flex-wrap">
             <span>
               <span className="text-yellow-500">&#9733;</span> 4.6 Trustpilot
             </span>
@@ -172,20 +172,20 @@ export default function Page() {
             <span className="text-gray-200 hidden sm:inline">|</span>
             <span>12-mo guarantee</span>
           </div>
-          <div className="mt-4 flex items-center justify-center gap-8 sm:gap-10 opacity-40 grayscale flex-wrap">
-            <img src="https://cdn.prod.website-files.com/67af85ea353c5f066fec698e/693b7c0d2a1c5eff7c7b71ca_0x0.png" alt="Forbes" className="h-5 object-contain" />
-            <img src="https://cdn.prod.website-files.com/67af85ea353c5f066fec698e/68f3d0e4ae8839f1692b8024_USA-Today-logo.png" alt="USA Today" className="h-5 object-contain" />
-            <img src="https://cdn.prod.website-files.com/67af85ea353c5f066fec698e/693b7b665a5fafdebd03ea6a_TechBullion-Transparent-Logo.webp" alt="TechBullion" className="h-5 object-contain" />
-            <img src="https://cdn.prod.website-files.com/67af85ea353c5f066fec698e/6953f13117484ba92320d177_gbaf-logo.avif" alt="GBAF" className="h-5 object-contain" />
+          <div className="mt-3 sm:mt-4 flex items-center justify-center gap-6 sm:gap-10 opacity-40 grayscale flex-wrap">
+            <img src="https://cdn.prod.website-files.com/67af85ea353c5f066fec698e/693b7c0d2a1c5eff7c7b71ca_0x0.png" alt="Forbes" className="h-4 sm:h-5 object-contain" />
+            <img src="https://cdn.prod.website-files.com/67af85ea353c5f066fec698e/68f3d0e4ae8839f1692b8024_USA-Today-logo.png" alt="USA Today" className="h-4 sm:h-5 object-contain" />
+            <img src="https://cdn.prod.website-files.com/67af85ea353c5f066fec698e/693b7b665a5fafdebd03ea6a_TechBullion-Transparent-Logo.webp" alt="TechBullion" className="h-4 sm:h-5 object-contain" />
+            <img src="https://cdn.prod.website-files.com/67af85ea353c5f066fec698e/6953f13117484ba92320d177_gbaf-logo.avif" alt="GBAF" className="h-4 sm:h-5 object-contain" />
           </div>
         </div>
       </section>
 
       {/* ── Chat ── */}
-      <section id="chat" className="px-4 pb-10 max-w-2xl w-full mx-auto">
-        {/* Messages area */}
+      <section id="chat" className="flex flex-col flex-1 min-h-0 px-4 pb-4 sm:pb-10 max-w-2xl w-full mx-auto">
+        {/* Messages area — fills available space on mobile */}
         {started && (
-          <div className="mb-4 max-h-[60vh] overflow-y-auto chat-scroll space-y-4 px-1 transition-all">
+          <div className="flex-1 min-h-0 overflow-y-auto chat-scroll space-y-4 px-1 mb-3 sm:mb-4 sm:max-h-[60vh] sm:flex-none transition-all">
             {messages.map((msg, i) => (
               <div key={i}>
                 <div
@@ -194,7 +194,7 @@ export default function Page() {
                   }`}
                 >
                   <div
-                    className={`max-w-[80%] px-4 py-3 text-[14px] leading-relaxed ${
+                    className={`max-w-[85%] sm:max-w-[80%] px-4 py-3 text-[14px] leading-relaxed ${
                       msg.role === "user"
                         ? "bg-gray-900 text-white rounded-3xl rounded-br-lg"
                         : "bg-white text-gray-800 rounded-3xl rounded-bl-lg shadow-sm border border-gray-200/60"
@@ -222,9 +222,12 @@ export default function Page() {
           </div>
         )}
 
-        {/* Input container */}
-        <form onSubmit={handleSubmit}>
-          <div className="bg-white rounded-3xl border border-[#ECECEC] shadow-sm p-4 transition-all">
+        {/* Spacer pushes input to bottom on mobile before chat starts */}
+        {!started && <div className="flex-1 sm:hidden" />}
+
+        {/* Input container — pinned to bottom on mobile */}
+        <form onSubmit={handleSubmit} className="shrink-0">
+          <div className="bg-white rounded-3xl border border-[#ECECEC] shadow-sm p-3 sm:p-4 transition-all">
             <div className="flex items-center gap-3">
               <textarea
                 ref={inputRef}
@@ -268,7 +271,7 @@ export default function Page() {
                     key={prompt}
                     type="button"
                     onClick={() => sendMessage(prompt)}
-                    className="px-3.5 py-1.5 rounded-full border border-gray-200 text-[13px] text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-all cursor-pointer whitespace-nowrap"
+                    className="px-3 sm:px-3.5 py-1.5 rounded-full border border-gray-200 text-[12px] sm:text-[13px] text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-all cursor-pointer whitespace-nowrap"
                   >
                     {prompt}
                   </button>

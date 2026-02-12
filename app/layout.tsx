@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: "Vector Algorithmics — Automated Trading That Profits In Any Market",
   description:
     "Market-neutral trading algorithms that capture gains whether markets rise or fall. No leverage, US-regulated execution. Talk to our AI to learn more.",
+  other: {
+    "viewport": "width=device-width, initial-scale=1, viewport-fit=cover",
+  },
 };
 
 export default function RootLayout({
